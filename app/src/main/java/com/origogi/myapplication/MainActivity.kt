@@ -1,6 +1,8 @@
 package com.origogi.myapplication
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val gridLayoutManager = GridLayoutManager(this, SPAN_COUNT_ONE)
-    private val itemAdapter = ItemAdapter( gridLayoutManager, this)
+    private val itemAdapter = ItemAdapter(gridLayoutManager, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +29,37 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this@MainActivity).get(ImageDataViewModel::class.java)
 
         viewModel.getAll().observe(this, Observer<List<ImageData>> { list ->
-            list.forEach {
-                Logger.d(it.toString())
-            }
             itemAdapter.updateDateSet(list)
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return true; }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        switchLayout()
+        switchIcon(item)
+
+        return true;
+    }
+
+    private fun switchLayout() {
+        if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {
+            gridLayoutManager.spanCount = SPAN_COUNT_THREE
+        } else {
+            gridLayoutManager.spanCount = SPAN_COUNT_ONE
+        }
+        itemAdapter.notifyItemRangeChanged(0, itemAdapter.itemCount)
+    }
+
+    fun switchIcon(item: MenuItem) {
+        if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {
+            item.icon = resources.getDrawable(R.drawable.ic_grid)
+        } else {
+            item.icon = resources.getDrawable(R.drawable.ic_list)
+
+        }
     }
 }

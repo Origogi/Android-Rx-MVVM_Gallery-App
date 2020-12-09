@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:layout_margin="4dp"
     android:padding="6dp">
 
 
     <ImageView
         android:id="@+id/image"
-
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         />
 
     <TextView

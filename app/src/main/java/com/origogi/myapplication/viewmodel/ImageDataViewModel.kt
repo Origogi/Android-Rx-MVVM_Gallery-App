@@ -10,6 +10,7 @@ import com.origogi.myapplication.model.ImageDataProvider
 class ImageDataViewModel(application: Application) : AndroidViewModel(application) {
 
     private val imageDataList : MutableLiveData<List<ImageData>> = MutableLiveData()
+    private val spanCount : MutableLiveData<Int> = MutableLiveData()
 
     init {
         ImageDataProvider.getImageDataList().subscribe {
@@ -19,6 +20,14 @@ class ImageDataViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getAll() : LiveData<List<ImageData>> {
         return imageDataList
+    }
+
+    fun getSpanCount() : LiveData<Int> {
+        return spanCount
+    }
+
+    fun updateSpanCount(count : Int) {
+        spanCount.postValue(count)
     }
 
 

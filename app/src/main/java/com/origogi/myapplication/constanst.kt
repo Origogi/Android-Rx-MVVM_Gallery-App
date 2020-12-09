@@ -1,4 +1,4 @@
 package com.origogi.myapplication
 
-val SPAN_COUNT_ONE = 1
-val SPAN_COUNT_THREE = 3
+val TYPE_LIST = 1
+val TYPE_GRID = 4

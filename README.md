@@ -1,8 +1,8 @@
 # test_app
 
-## TODO
+## TODO List
 
 - [x] list view
-- [ ] grid view
+- [x] grid view
 - [ ] item placeholder
 - [ ] select item

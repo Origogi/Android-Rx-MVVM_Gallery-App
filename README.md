@@ -2,7 +2,7 @@
 
 ## TODO
 
-- [] list view
-- [] grid view
-- [] item placeholder
-- [] select item
+- [x] list view
+- [ ] grid view
+- [ ] item placeholder
+- [ ] select item

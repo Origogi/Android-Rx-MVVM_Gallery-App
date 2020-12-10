@@ -1,6 +1,7 @@
 package com.origogi.myapplication.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.origogi.myapplication.R
 import com.origogi.myapplication.SPAN_COUNT_ONE
 import com.origogi.myapplication.model.ImageData
+import kotlinx.android.synthetic.main.activity_detail.*
 
-class ItemAdapter(private val layoutManager: GridLayoutManager, private val activity: Activity) :
+class ItemAdapter(private val layoutManager: GridLayoutManager, private val context: Context) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     val dataSet = mutableListOf<ImageData>();
@@ -60,7 +62,7 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val acti
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         val imageData: ImageData = dataSet[position]
-        Glide.with(activity)
+        Glide.with(context)
             .load(imageData.imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.image)
@@ -69,7 +71,7 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val acti
         holder.itemView.setOnClickListener {
             val imageUrl: String = imageData.imageUrl
 
-            Intent(activity, DetailActivity::class.java).run {
+            Intent(context, DetailActivity::class.java).run {
                 putExtra("imageUrl", imageUrl)
 
                 val imageView = it.findViewById<View>(R.id.image)
@@ -77,9 +79,9 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val acti
 
 
                 val options: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pair)
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, pair)
 
-                activity.startActivity(this, options.toBundle())
+                context.startActivity(this, options.toBundle())
             }
         }
     }

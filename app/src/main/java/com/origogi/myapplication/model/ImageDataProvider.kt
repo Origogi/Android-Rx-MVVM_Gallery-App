@@ -10,7 +10,10 @@ object ImageDataProvider {
     private val subject = PublishSubject.create<List<ImageData>>()
 
     fun getImageDataList() : Observable<List<ImageData>> {
+        return subject
+    }
 
+    fun fetch() {
         Thread {
             try {
                 val doc = Jsoup.connect("https://www.gettyimagesgallery.com/collection/sasha/").get()
@@ -27,9 +30,8 @@ object ImageDataProvider {
                 subject.onNext(imageDataList)
 
             } catch (e: IOException) {
-                e.printStackTrace()
+                subject.onNext(emptyList())
             }
         }.start()
-        return subject
     }
 }

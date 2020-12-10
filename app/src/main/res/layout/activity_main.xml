@@ -10,6 +10,10 @@
     <include
         layout="@layout/layout_placeholder"/>
 
+    <include
+        android:id="@+id/errorView"
+        android:visibility="gone"
+        layout="@layout/layout_error"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

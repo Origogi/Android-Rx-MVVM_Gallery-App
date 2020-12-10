@@ -17,12 +17,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.origogi.myapplication.R
 import com.origogi.myapplication.SPAN_COUNT_ONE
 import com.origogi.myapplication.model.ImageData
-import kotlinx.android.synthetic.main.activity_detail.*
 
 class ItemAdapter(private val layoutManager: GridLayoutManager, private val context: Context) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
-    val dataSet = mutableListOf<ImageData>();
+    private val dataSet = mutableListOf<ImageData>()
 
     private val VIEW_TYPE_GRID = 1
     private val VIEW_TYPE_LIST = 2
@@ -30,7 +29,6 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val cont
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.image)
         val title: TextView = itemView.findViewById(R.id.title)
-
     }
 
     fun updateDateSet(list: List<ImageData>) {
@@ -51,9 +49,9 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val cont
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = if (viewType == VIEW_TYPE_LIST) {
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false);
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         } else {
-            LayoutInflater.from(parent.context).inflate(R.layout.grid_item, parent, false);
+            LayoutInflater.from(parent.context).inflate(R.layout.grid_item, parent, false)
         }
 
         return ItemViewHolder(view)

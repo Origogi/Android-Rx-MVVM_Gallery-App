@@ -1,28 +1,28 @@
-package com.origogi.myapplication
+package com.origogi.myapplication.view
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import com.origogi.myapplication.log.Logger
+import com.origogi.myapplication.R
+import com.origogi.myapplication.SPAN_COUNT_FOUR
+import com.origogi.myapplication.SPAN_COUNT_ONE
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.viewmodel.ImageDataViewModel
-import io.supercharge.shimmerlayout.ShimmerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_placeholder.*
 
-
 class MainActivity : AppCompatActivity() {
-    private val gridLayoutManager = GridLayoutManager(this, SPAN_COUNT_ONE)
-    private val itemAdapter = ItemAdapter(gridLayoutManager, this)
-    private var viewModel : ImageDataViewModel? = null
-    private var menuItem : MenuItem? = null
+    private val gridLayoutManager = GridLayoutManager(
+        this,
+        SPAN_COUNT_ONE
+    )
+    private val itemAdapter =
+        ItemAdapter(gridLayoutManager, this)
+    private var viewModel: ImageDataViewModel? = null
+    private var menuItem: MenuItem? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         placeHolderView.startShimmerAnimation()
-
-        findViewById<ShimmerLayout>(R.id.placeHolderView).startShimmerAnimation()
 
         recyclerView.apply {
             adapter = itemAdapter
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        viewModel?.getSpanCount()?.observe(this, Observer { spanCount->
+        viewModel?.getSpanCount()?.observe(this, Observer { spanCount ->
             gridLayoutManager.spanCount = spanCount
             itemAdapter.notifyItemRangeChanged(0, itemAdapter.itemCount)
             switchIcon(menuItem)

@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
             itemAdapter.updateDateSet(list)
             placeHolderView.stopShimmerAnimation()
             placeHolderView.visibility = View.GONE
+            menuItem?.isVisible = true
+
         })
 
         viewModel?.getSpanCount()?.observe(this, Observer { spanCount->
@@ -55,9 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu);
-
         menuItem = menu?.findItem(R.id.action_layout)
-        return true; }
+        menuItem?.isVisible = false
+        return true;
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {

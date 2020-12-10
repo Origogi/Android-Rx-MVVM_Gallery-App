@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             item?.icon = resources.getDrawable(R.drawable.ic_grid)
         } else {
             item?.icon = resources.getDrawable(R.drawable.ic_list)
-
         }
     }
 }

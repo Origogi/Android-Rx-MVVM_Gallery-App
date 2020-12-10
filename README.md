@@ -4,5 +4,6 @@
 
 - [x] list view
 - [x] grid view
-- [ ] item placeholder
-- [ ] select item
+- [x] item placeholder
+- [x] select item
+- [ ] handle network error exception

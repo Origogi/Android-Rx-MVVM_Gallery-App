@@ -45,9 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel?.getAll()?.observe(this, Observer<List<ImageData>> { list ->
             itemAdapter.updateDateSet(list)
-            placeHolderView.stopShimmerAnimation()
-            placeHolderView.visibility = View.GONE
-            menuItem?.isVisible = true
         })
 
         viewModel?.getSpanCount()?.observe(this, Observer { spanCount ->
@@ -60,6 +57,8 @@ class MainActivity : AppCompatActivity() {
             errorView.visibility = View.GONE
             recyclerView.visibility = View.GONE
             placeHolderView.visibility = View.GONE
+            menuItem?.isVisible = false
+
             placeHolderView.stopShimmerAnimation()
 
             when (state) {
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                 STATE.LOADED -> {
                     recyclerView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
                     recyclerView.visibility = View.VISIBLE
+                    menuItem?.isVisible = true
                 }
             }
         })
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         menuItem = menu?.findItem(R.id.action_layout)
-        menuItem?.isVisible = false
+        switchIcon(item = menuItem)
         return true
     }
 

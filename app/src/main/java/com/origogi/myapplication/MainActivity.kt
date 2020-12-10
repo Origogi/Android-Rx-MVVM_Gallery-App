@@ -3,6 +3,7 @@ package com.origogi.myapplication
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -12,18 +13,25 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.origogi.myapplication.log.Logger
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.viewmodel.ImageDataViewModel
+import io.supercharge.shimmerlayout.ShimmerLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_placeholder.*
 
 
 class MainActivity : AppCompatActivity() {
-    private val gridLayoutManager = GridLayoutManager(this, TYPE_LIST)
+    private val gridLayoutManager = GridLayoutManager(this, SPAN_COUNT_ONE)
     private val itemAdapter = ItemAdapter(gridLayoutManager, this)
     private var viewModel : ImageDataViewModel? = null
     private var menuItem : MenuItem? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        placeHolderView.startShimmerAnimation()
+
+        findViewById<ShimmerLayout>(R.id.placeHolderView).startShimmerAnimation()
 
         recyclerView.apply {
             adapter = itemAdapter
@@ -34,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel?.getAll()?.observe(this, Observer<List<ImageData>> { list ->
             itemAdapter.updateDateSet(list)
+            placeHolderView.stopShimmerAnimation()
+            placeHolderView.visibility = View.GONE
         })
 
         viewModel?.getSpanCount()?.observe(this, Observer { spanCount->
@@ -50,16 +60,16 @@ class MainActivity : AppCompatActivity() {
         return true; }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (gridLayoutManager.spanCount == TYPE_LIST) {
-            viewModel?.updateSpanCount(TYPE_GRID)
+        if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {
+            viewModel?.updateSpanCount(SPAN_COUNT_FOUR)
         } else {
-            viewModel?.updateSpanCount(TYPE_LIST)
+            viewModel?.updateSpanCount(SPAN_COUNT_ONE)
         }
         return true;
     }
 
     private fun switchIcon(item: MenuItem?) {
-        if (gridLayoutManager.spanCount == TYPE_LIST) {
+        if (gridLayoutManager.spanCount == SPAN_COUNT_ONE) {
             item?.icon = resources.getDrawable(R.drawable.ic_grid)
         } else {
             item?.icon = resources.getDrawable(R.drawable.ic_list)

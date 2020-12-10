@@ -7,6 +7,10 @@
     android:background="#E5E5E5"
     tools:context=".MainActivity">
 
+    <include
+        layout="@layout/layout_placeholder"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

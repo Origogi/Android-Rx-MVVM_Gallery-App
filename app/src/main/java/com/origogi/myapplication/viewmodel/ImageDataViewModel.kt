@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.origogi.myapplication.STATE
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.model.ImageDataProvider
+import io.reactivex.schedulers.Schedulers
 
 class ImageDataViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,15 +17,6 @@ class ImageDataViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         fetchData()
-        ImageDataProvider.getImageDataList().subscribe {
-
-            if (it.isNotEmpty()) {
-                imageDataList.postValue(it)
-                currentState.postValue(STATE.LOADED)
-            } else {
-                currentState.postValue(STATE.ERROR)
-            }
-        }
     }
 
     fun getAll(): LiveData<List<ImageData>> {
@@ -46,5 +38,15 @@ class ImageDataViewModel(application: Application) : AndroidViewModel(applicatio
     fun fetchData() {
         currentState.postValue(STATE.LOADING)
         ImageDataProvider.fetch()
+            .subscribeOn(Schedulers.io())
+            .subscribe({ list ->
+                if (list.isNotEmpty()) {
+                    imageDataList.postValue(list)
+                    currentState.postValue(STATE.LOADED)
+                }
+            }, {
+                currentState.postValue(STATE.ERROR)
+            }
+            )
     }
 }

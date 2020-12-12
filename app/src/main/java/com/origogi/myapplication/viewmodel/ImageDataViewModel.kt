@@ -1,15 +1,15 @@
 package com.origogi.myapplication.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.origogi.myapplication.STATE
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.model.ImageDataProvider
 import io.reactivex.schedulers.Schedulers
 
-class ImageDataViewModel(application: Application) : AndroidViewModel(application) {
+class ImageDataViewModel() : ViewModel() {
 
     private val imageDataList: MutableLiveData<List<ImageData>> = MutableLiveData()
     private val spanCount: MutableLiveData<Int> = MutableLiveData()
@@ -47,6 +47,6 @@ class ImageDataViewModel(application: Application) : AndroidViewModel(applicatio
             }, {
                 currentState.postValue(STATE.ERROR)
             }
-            )
+        )
     }
 }

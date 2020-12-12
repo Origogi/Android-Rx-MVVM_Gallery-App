@@ -1,7 +1,6 @@
 package com.origogi.myapplication.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,16 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.origogi.myapplication.R
 import com.origogi.myapplication.SPAN_COUNT_ONE
 import com.origogi.myapplication.model.ImageData
 
-class ItemAdapter(private val layoutManager: GridLayoutManager, private val context: Context) :
+class ItemAdapter(
+    private val layoutManager: GridLayoutManager,
+    private val requestManager: RequestManager
+) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     private val dataSet = mutableListOf<ImageData>()
@@ -60,21 +62,20 @@ class ItemAdapter(private val layoutManager: GridLayoutManager, private val cont
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         val imageData: ImageData = dataSet[position]
-        Glide.with(context)
-            .load(imageData.imageUrl)
+        requestManager.load(imageData.imageUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.image)
         holder.title.text = imageData.imageTitle
 
         holder.itemView.setOnClickListener {
             val imageUrl: String = imageData.imageUrl
+            val context = it.context
 
             Intent(context, DetailActivity::class.java).run {
                 putExtra("imageUrl", imageUrl)
 
                 val imageView = it.findViewById<View>(R.id.image)
                 val pair = Pair(imageView, "image")
-
 
                 val options: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, pair)

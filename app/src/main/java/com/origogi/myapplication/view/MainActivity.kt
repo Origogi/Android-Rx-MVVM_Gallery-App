@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.origogi.myapplication.R
 import com.origogi.myapplication.SPAN_COUNT_FOUR
 import com.origogi.myapplication.SPAN_COUNT_ONE
@@ -25,8 +26,9 @@ class MainActivity : AppCompatActivity() {
         this,
         SPAN_COUNT_ONE
     )
-    private val itemAdapter =
-        ItemAdapter(gridLayoutManager, this)
+    private val itemAdapter by lazy {
+        ItemAdapter(gridLayoutManager, Glide.with(this))
+    }
     private var viewModel: ImageDataViewModel? = null
     private var menuItem: MenuItem? = null
 

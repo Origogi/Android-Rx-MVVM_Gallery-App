@@ -36,8 +36,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        placeHolderView.startShimmerAnimation()
-
         recyclerView.apply {
             adapter = itemAdapter
             layoutManager = gridLayoutManager

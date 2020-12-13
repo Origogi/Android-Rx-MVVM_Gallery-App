@@ -1,10 +1,12 @@
 package com.origogi.myapplication
 
-const val SPAN_COUNT_ONE = 1
-const val SPAN_COUNT_FOUR = 4
-
-enum class STATE {
+enum class AppState {
     ERROR,
     LOADING,
     LOADED
+}
+
+enum class ViewType(val spanCount : Int) {
+    LIST(1),
+    GRID(4)
 }

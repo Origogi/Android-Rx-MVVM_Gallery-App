@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.origogi.myapplication.R
-import com.origogi.myapplication.SPAN_COUNT_ONE
+import com.origogi.myapplication.ViewType
 import com.origogi.myapplication.model.ImageData
 
 class ItemAdapter(
@@ -24,9 +24,6 @@ class ItemAdapter(
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     private val dataSet = mutableListOf<ImageData>()
-
-    private val VIEW_TYPE_GRID = 1
-    private val VIEW_TYPE_LIST = 2
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.image)
@@ -40,17 +37,11 @@ class ItemAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val spanCount = layoutManager.spanCount
-
-        return if (spanCount == SPAN_COUNT_ONE) {
-            VIEW_TYPE_LIST
-        } else {
-            VIEW_TYPE_GRID
-        }
+        return layoutManager.spanCount
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = if (viewType == VIEW_TYPE_LIST) {
+        val view = if (viewType == ViewType.LIST.spanCount) {
             LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         } else {
             LayoutInflater.from(parent.context).inflate(R.layout.grid_item, parent, false)

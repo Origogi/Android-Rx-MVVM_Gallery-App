@@ -4,7 +4,8 @@ package com.origogi.myapplication.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.origogi.myapplication.STATE
+import com.origogi.myapplication.AppState
+import com.origogi.myapplication.ViewType
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.model.ImageDataProvider
 import io.reactivex.schedulers.Schedulers
@@ -12,40 +13,40 @@ import io.reactivex.schedulers.Schedulers
 class ImageDataViewModel() : ViewModel() {
 
     private val imageDataList: MutableLiveData<List<ImageData>> = MutableLiveData()
-    private val spanCount: MutableLiveData<Int> = MutableLiveData()
-    private val currentState: MutableLiveData<STATE> = MutableLiveData()
+    private val viewType: MutableLiveData<ViewType> = MutableLiveData()
+    private val appState: MutableLiveData<AppState> = MutableLiveData()
 
     init {
         fetchData()
     }
 
-    fun getAll(): LiveData<List<ImageData>> {
+    fun getImageDataList(): LiveData<List<ImageData>> {
         return imageDataList
     }
 
-    fun getSpanCount(): LiveData<Int> {
-        return spanCount
+    fun getViewType(): LiveData<ViewType> {
+        return viewType
     }
 
-    fun getCurrentState(): LiveData<STATE> {
-        return currentState
+    fun getAppState(): LiveData<AppState> {
+        return appState
     }
 
-    fun updateSpanCount(count: Int) {
-        spanCount.postValue(count)
+    fun updateViewType(type : ViewType) {
+        viewType.postValue(type)
     }
 
     fun fetchData() {
-        currentState.postValue(STATE.LOADING)
+        appState.postValue(AppState.LOADING)
         ImageDataProvider.fetch()
             .subscribeOn(Schedulers.io())
             .subscribe({ list ->
                 if (list.isNotEmpty()) {
                     imageDataList.postValue(list)
-                    currentState.postValue(STATE.LOADED)
+                    appState.postValue(AppState.LOADED)
                 }
             }, {
-                currentState.postValue(STATE.ERROR)
+                appState.postValue(AppState.ERROR)
             }
         )
     }

@@ -84,8 +84,10 @@ class MainActivity : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.main_menu, menu)
         menuItem = menu?.findItem(R.id.action_layout)?.apply {
-            if (viewModel?.getAppState()?.value == AppState.LOADING) {
-                isVisible = false
+            isVisible = false
+
+            if (viewModel?.getAppState()?.value == AppState.LOADED) {
+                isVisible = true
             }
         }
         switchIcon(menuItem)

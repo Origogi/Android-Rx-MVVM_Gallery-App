@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             switchIcon(menuItem)
         })
 
-
         viewModel?.getAppState()?.observe(this, Observer { state ->
             errorView.visibility = View.GONE
             recyclerView.visibility = View.GONE

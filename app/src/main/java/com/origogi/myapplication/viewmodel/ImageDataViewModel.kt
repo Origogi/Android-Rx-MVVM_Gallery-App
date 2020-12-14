@@ -32,7 +32,7 @@ class ImageDataViewModel() : ViewModel() {
         return appState
     }
 
-    fun updateViewType(type : ViewType) {
+    fun updateViewType(type: ViewType) {
         viewType.postValue(type)
     }
 
@@ -41,13 +41,11 @@ class ImageDataViewModel() : ViewModel() {
         ImageDataProvider.fetch()
             .subscribeOn(Schedulers.io())
             .subscribe({ list ->
-                if (list.isNotEmpty()) {
-                    imageDataList.postValue(list)
-                    appState.postValue(AppState.LOADED)
-                }
+                imageDataList.postValue(list)
+                appState.postValue(AppState.LOADED)
             }, {
                 appState.postValue(AppState.ERROR)
             }
-        )
+            )
     }
 }

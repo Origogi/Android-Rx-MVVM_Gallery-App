@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.visibility = View.VISIBLE
                     menuItem?.isVisible = true
                 }
+                else -> throw AssertionError() // impossible case
             }
         })
 

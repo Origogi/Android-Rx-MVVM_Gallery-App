@@ -10,7 +10,7 @@ import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.model.ImageDataProvider
 import io.reactivex.schedulers.Schedulers
 
-class ImageDataViewModel() : ViewModel() {
+class ImageDataViewModel : ViewModel() {
 
     private val imageDataList: MutableLiveData<List<ImageData>> = MutableLiveData()
     private val viewType: MutableLiveData<ViewType> = MutableLiveData()

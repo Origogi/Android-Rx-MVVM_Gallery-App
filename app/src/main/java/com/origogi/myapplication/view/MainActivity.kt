@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             switchIcon(menuItem)
         })
 
+
         viewModel?.getAppState()?.observe(this, Observer { state ->
             errorView.visibility = View.GONE
             recyclerView.visibility = View.GONE
@@ -80,15 +81,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         menuInflater.inflate(R.menu.main_menu, menu)
-        menuItem = menu?.findItem(R.id.action_layout)
-        switchIcon(item = menuItem)
+        menuItem = menu?.findItem(R.id.action_layout)?.apply {
+            if (viewModel?.getAppState()?.value == AppState.LOADING) {
+                isVisible = false
+            }
+        }
+        switchIcon(menuItem)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (gridLayoutManager.spanCount == ViewType.LIST.spanCount) {
-            viewModel?.updateViewType( ViewType.GRID)
+            viewModel?.updateViewType(ViewType.GRID)
         } else {
             viewModel?.updateViewType(ViewType.LIST)
         }

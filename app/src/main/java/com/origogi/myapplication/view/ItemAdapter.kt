@@ -53,10 +53,13 @@ class ItemAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         val imageData: ImageData = dataSet[position]
-        requestManager.load(imageData.imageUrl)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(holder.image)
-        holder.title.text = imageData.imageTitle
+
+        holder.apply {
+            requestManager.load(imageData.imageUrl)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(image)
+            title.text = imageData.imageTitle
+        }
 
         holder.itemView.setOnClickListener {
             val imageUrl: String = imageData.imageUrl
@@ -66,10 +69,9 @@ class ItemAdapter(
                 putExtra("imageUrl", imageUrl)
 
                 val imageView = it.findViewById<View>(R.id.image)
-                val pair = Pair(imageView, "image")
 
                 val options: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, pair)
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, Pair(imageView, "image"))
 
                 context.startActivity(this, options.toBundle())
             }

@@ -8,13 +8,18 @@ import com.origogi.myapplication.AppState
 import com.origogi.myapplication.ViewType
 import com.origogi.myapplication.model.ImageData
 import com.origogi.myapplication.model.ImageDataProvider
+import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 
 class ImageDataViewModel : ViewModel() {
 
     private val imageDataList: MutableLiveData<List<ImageData>> = MutableLiveData()
     private val viewType: MutableLiveData<ViewType> = MutableLiveData()
     private val appState: MutableLiveData<AppState> = MutableLiveData()
+    private val disposable : Disposable? = null
+
 
     init {
         fetchData()
@@ -36,9 +41,13 @@ class ImageDataViewModel : ViewModel() {
         viewType.postValue(type)
     }
 
+
     fun fetchData() {
         appState.postValue(AppState.LOADING)
-        ImageDataProvider.fetch()
+
+
+        val disposable = ImageDataProvider.fetch()
+            .doOnError {  }
             .subscribeOn(Schedulers.io())
             .subscribe({ list ->
                 imageDataList.postValue(list)
@@ -47,5 +56,12 @@ class ImageDataViewModel : ViewModel() {
                 appState.postValue(AppState.ERROR)
             }
             )
+
+//        disposable.dispose()
     }
+//
+//    override fun onCleared() {
+//        super.onCleared()
+//        disposable?.dispose()
+//    }
 }

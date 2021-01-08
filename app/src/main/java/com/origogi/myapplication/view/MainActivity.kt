@@ -1,6 +1,7 @@
 package com.origogi.myapplication.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import com.origogi.myapplication.viewmodel.ImageDataViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_placeholder.*
+import java.util.logging.Logger
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +31,41 @@ class MainActivity : AppCompatActivity() {
     private var viewModel: ImageDataViewModel? = null
     private var menuItem: MenuItem? = null
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("TEST","Main onPause()")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("TEST","Main onResume()")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("TEST","Main onStart()")
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("TEST","Main onRestart()")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("TEST","Main onStop()")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("TEST","Main onDestroy()")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("TEST","Main onCreate()")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

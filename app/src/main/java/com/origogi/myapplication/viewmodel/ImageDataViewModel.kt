@@ -57,11 +57,11 @@ class ImageDataViewModel : ViewModel() {
             }
             )
 
-//        disposable.dispose()
+        disposable.dispose()
     }
-//
-//    override fun onCleared() {
-//        super.onCleared()
-//        disposable?.dispose()
-//    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
+    }
 }
